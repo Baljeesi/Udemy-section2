@@ -1,37 +1,56 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { CheckCircle, AlertCircle, Clock } from 'lucide-react';
 
 interface StatusCardProps {
   title: string;
-  value: string;
-  description: string;
-  icon: ReactNode;
-  status?: 'success' | 'warning' | 'error';
+  status: 'success' | 'warning' | 'error' | 'pending';
+  message: string;
+  timestamp: string;
 }
 
-const StatusCard: React.FC<StatusCardProps> = ({ 
-  title, 
-  value, 
-  description, 
-  icon,
-  status = 'normal'
-}) => {
-  const statusColors = {
-    success: 'bg-green-50 border-green-200',
-    warning: 'bg-yellow-50 border-yellow-200',
-    error: 'bg-red-50 border-red-200',
-    normal: 'bg-white border-gray-200'
+const StatusCard: React.FC<StatusCardProps> = ({ title, status, message, timestamp }) => {
+  const getStatusIcon = () => {
+    switch (status) {
+      case 'success':
+        return <CheckCircle className="h-6 w-6 text-success-500" />;
+      case 'warning':
+        return <AlertCircle className="h-6 w-6 text-warning-500" />;
+      case 'error':
+        return <AlertCircle className="h-6 w-6 text-error-500" />;
+      case 'pending':
+        return <Clock className="h-6 w-6 text-slate-400" />;
+      default:
+        return null;
+    }
+  };
+
+  const getStatusColorClass = () => {
+    switch (status) {
+      case 'success':
+        return 'bg-success-50 border-success-200 dark:bg-success-900/20 dark:border-success-700';
+      case 'warning':
+        return 'bg-warning-50 border-warning-200 dark:bg-warning-900/20 dark:border-warning-700';
+      case 'error':
+        return 'bg-error-50 border-error-200 dark:bg-error-900/20 dark:border-error-700';
+      case 'pending':
+        return 'bg-slate-50 border-slate-200 dark:bg-slate-800 dark:border-slate-700';
+      default:
+        return 'bg-white border-slate-200 dark:bg-slate-800 dark:border-slate-700';
+    }
   };
 
   return (
-    <div className={`rounded-lg shadow-sm p-6 border ${statusColors[status]} 
-      hover:shadow-md transition-shadow duration-300`}>
-      <div className="flex justify-between items-start mb-4">
-        <h3 className="font-medium text-gray-700">{title}</h3>
-        {icon}
-      </div>
-      <div className="mt-2">
-        <div className="text-2xl font-bold text-gray-800">{value}</div>
-        <p className="text-gray-500 text-sm mt-1">{description}</p>
+    <div className={`rounded-xl shadow-sm border ${getStatusColorClass()} backdrop-blur-sm`}>
+      <div className="p-6">
+        <div className="flex items-center">
+          {getStatusIcon()}
+          <h2 className="text-lg font-semibold ml-2 text-slate-800 dark:text-white">{title}</h2>
+        </div>
+        
+        <div className="mt-4">
+          <p className="text-xl font-medium text-slate-700 dark:text-slate-200">{message}</p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Timestamp: {timestamp}</p>
+        </div>
       </div>
     </div>
   );

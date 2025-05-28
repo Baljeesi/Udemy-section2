@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dashboard from './components/Dashboard';
+import './index.css';
 
 function App() {
-  useEffect(() => {
-    // Update document title
-    document.title = 'CI/CD Docker Dashboard | Sagar Kakkala';
-    
-    // Optional: Add docker favicon
-    const link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-    if (link) {
-      link.href = "https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png";
-    }
+  // Title update
+  React.useEffect(() => {
+    document.title = "CI/CD Dashboard - Sagar Kakkala";
   }, []);
 
   return (
-    <div className="font-sans text-gray-900 antialiased">
-      <Dashboard />
-    </div>
+    <Dashboard />
   );
 }
 
