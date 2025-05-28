@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
             <StatusCard 
               title="Deployment Status"
               status="success"
-              message="Congratulations Manual Build and Deployment of React Application is Successfull"
+              message="Congratulations Build and Deployment of React Application is Successfull using Docker"
               timestamp={new Date().toLocaleString()}
             />
           </FadeIn>
